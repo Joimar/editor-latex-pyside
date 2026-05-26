@@ -5,7 +5,7 @@ from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PySide6.QtWidgets import QMessageBox, QApplication
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QSplitter
-from PySide6.QtCore import QCoreApplication, QTranslator, Qt
+from PySide6.QtCore import QCoreApplication, QTranslator, Qt, QUrl
 from PySide6.QtCore import Slot
 from Services.SpellCheckingHighLighter import SpellCheckingHighLighter
 from StyleFiles.AppThemes import AppTheme
@@ -18,10 +18,15 @@ from Services.TextEditorService import TextEditorService
 import subprocess
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
+
+
+
+
 class MainWindow(QMainWindow):
     __fontSizeWindow = None
     # Criando instância do serviço antes de usá-lo
     __service = TextEditorService()
+    # Right side: WebEngine Visualizer
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -29,13 +34,13 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # creating PDF visualizer
+        self.__web_visualizer = QWebEngineView()
+        self.update_pdf_visualizer()
         # Persistent Settings
         self.settings = QSettings("config.ini", QSettings.IniFormat)
 
         splitter = QSplitter(Qt.Horizontal)
-
-        # Right side: WebEngine Visualizer
-        self.web_visualizer = QWebEngineView()
 
         self.highlighter = SpellCheckingHighLighter(self.ui.plainTextEdit.document())
         # File Actions
@@ -61,7 +66,7 @@ class MainWindow(QMainWindow):
         self.ui.actionen.triggered.connect(lambda: self.set_language('en'))
         self.ui.actiones.triggered.connect(lambda: self.set_language('es'))
         self.ui.actionfr.triggered.connect(lambda: self.set_language('fr'))
-        self.ui.actionde.triggered.connect(lambda: self.set_language('de')) # German
+        self.ui.actionde.triggered.connect(lambda: self.set_language('de'))  # German
         self.ui.actionru.triggered.connect(lambda: self.set_language('ru'))
 
         # loading persistent settings
@@ -73,7 +78,7 @@ class MainWindow(QMainWindow):
 
         # Adding web visualizer and plainTextEdit to splitter
         splitter.addWidget(self.ui.plainTextEdit)
-        splitter.addWidget(self.web_visualizer)
+        splitter.addWidget(self.__web_visualizer)
         splitter.setSizes([500, 500])
         self.setCentralWidget(splitter)
 
@@ -229,7 +234,6 @@ class MainWindow(QMainWindow):
 
         self.settings.setValue("font_size", self.__fontSizeWindow.ui.spinBox.value())
 
-
     def updateWindowTitle(self):
 
         if self.__service.file_exist():
@@ -262,11 +266,6 @@ class MainWindow(QMainWindow):
         if os.path.exists(translation_file) and self._translator.load(translation_file):
             app.installTranslator(self._translator)
             print(f"Idioma alterado para: {lang}")
-
-            # Força a retradução de toda a UI
-            # self.ui.retranslateUi(self)
-            # Retraduz strings manuais
-            # self.retranslateUi()
 
         # load specific .qm file (qtbase_en.qm for example) to handle native windows such as Dialog Windows
         if os.path.exists(translation_native_file) and self._qt_base_translator.load(translation_native_file):
@@ -318,3 +317,14 @@ class MainWindow(QMainWindow):
             self.apply_stylesheet(AppTheme.LIGHT)
 
         self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
+
+
+    def update_pdf_visualizer(self):
+
+        viewer_path = os.path.abspath("resources/pdfjs/web/viewer.html")
+        pdf_path = os.path.abspath("Olha o PDF")
+        if os.path.exists(viewer_path):
+
+            url_completa = f"file://{viewer_path}?file=file://{pdf_path}"
+            self.__web_visualizer.setUrl(url_completa)
+            print("Viewer Exists")
