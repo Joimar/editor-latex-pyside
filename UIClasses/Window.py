@@ -214,10 +214,12 @@ class MainWindow(QMainWindow):
 
     def pressAppearanceChangeFont(self):
 
-        self.__fontSizeWindow = FontSizeWindow(self.ui.plainTextEdit)
-        self.__fontSizeWindow.__fontSize = self.ui.plainTextEdit.fontInfo().pointSize()
+        self.__fontSizeWindow = FontSizeWindow()
 
-        self.__fontSizeWindow.ui.spinBox.setValue(self.ui.plainTextEdit.fontInfo().pointSize())
+        # print("Font Size: " + str(self.ui.plainTextEdit.fontInfo().pointSize()))
+        # print("Font Style: " + str(self.ui.plainTextEdit.fontInfo().style()))
+        self.__fontSizeWindow.ui.spinBox.setValue(int(self.settings.value("font_size", 11)))
+
         self.__fontSizeWindow.ui.spinBox.valueChanged.connect(self.updateFontSize)
 
         self.__fontSizeWindow.show()
@@ -315,9 +317,4 @@ class MainWindow(QMainWindow):
         else:
             self.apply_stylesheet(AppTheme.LIGHT)
 
-        font = self.ui.plainTextEdit.font()
-
-        font_size = int(self.settings.value("font_size", 11))
-        font.setPointSize(font_size)
-
-        self.ui.plainTextEdit.setFont(font)
+        self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
