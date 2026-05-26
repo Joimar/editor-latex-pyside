@@ -5,7 +5,7 @@ from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PySide6.QtWidgets import QMessageBox, QApplication
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QSplitter
-from PySide6.QtCore import QCoreApplication, QTranslator
+from PySide6.QtCore import QCoreApplication, QTranslator, Qt
 from PySide6.QtCore import Slot
 from Services.SpellCheckingHighLighter import SpellCheckingHighLighter
 from StyleFiles.AppThemes import AppTheme
@@ -31,6 +31,8 @@ class MainWindow(QMainWindow):
 
         # Persistent Settings
         self.settings = QSettings("config.ini", QSettings.IniFormat)
+
+        splitter = QSplitter(Qt.Horizontal)
 
         # Right side: WebEngine Visualizer
         self.web_visualizer = QWebEngineView()
@@ -68,6 +70,12 @@ class MainWindow(QMainWindow):
         # Spell Checker settings
 
         self.ui.plainTextEdit.document().modificationChanged.connect(self.__on_text_changed)
+
+        # Adding web visualizer and plainTextEdit to splitter
+        splitter.addWidget(self.ui.plainTextEdit)
+        splitter.addWidget(self.web_visualizer)
+        splitter.setSizes([500, 500])
+        self.setCentralWidget(splitter)
 
         # Messages for external windows
         self.Export_pdf = AppStrings.EXPORT_PDF
