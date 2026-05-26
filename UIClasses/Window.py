@@ -32,6 +32,8 @@ class MainWindow(QMainWindow):
         # Persistent Settings
         self.settings = QSettings("config.ini", QSettings.IniFormat)
 
+        # Right side: WebEngine Visualizer
+        self.web_visualizer = QWebEngineView()
 
         self.highlighter = SpellCheckingHighLighter(self.ui.plainTextEdit.document())
         # File Actions
