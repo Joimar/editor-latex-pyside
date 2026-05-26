@@ -4,7 +4,7 @@ from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PySide6.QtWidgets import QMessageBox, QApplication
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QMainWindow, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QFileDialog, QSplitter
 from PySide6.QtCore import QCoreApplication, QTranslator
 from PySide6.QtCore import Slot
 from Services.SpellCheckingHighLighter import SpellCheckingHighLighter
@@ -15,7 +15,8 @@ from UIClasses.FontSizeWindow import FontSizeWindow
 from UIFiles.UIMainWindow import Ui_MainWindow
 
 from Services.TextEditorService import TextEditorService
-
+import subprocess
+from PySide6.QtWebEngineWidgets import QWebEngineView
 
 class MainWindow(QMainWindow):
     __fontSizeWindow = None
