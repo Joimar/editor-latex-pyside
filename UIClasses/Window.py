@@ -2,7 +2,7 @@
 import os
 
 from PySide6.QtPdf import QPdfDocument
-from PySide6.QtPdfWidgets import QPdfView
+#from PySide6.QtPdfWidgets import QPdfView
 
 from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -19,8 +19,9 @@ from UIClasses.FontSizeWindow import FontSizeWindow
 from UIFiles.UIMainWindow import Ui_MainWindow
 
 from Services.TextEditorService import TextEditorService
+from Services.PdfView import PdfView
 import subprocess
-from PySide6.QtWebEngineWidgets import QWebEngineView
+
 
 
 class MainWindow(QMainWindow):
@@ -38,7 +39,7 @@ class MainWindow(QMainWindow):
 
         # PDF
         self.pdf_document = QPdfDocument()
-        self.pdf_view = QPdfView()
+        self.pdf_view = PdfView()
         self.pdf_view.setDocument(self.pdf_document)
 
         # Adding PDF view and plainTextEdit to splitter
@@ -323,4 +324,3 @@ class MainWindow(QMainWindow):
 
         self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
 
-   
