@@ -52,3 +52,21 @@ class LatexCompiler(QObject):
 
         else:
             self.compilation_failed.emit(f"Compilation error (code = {exit_code})")
+
+    def compile(self, tex_file):
+
+        self.compilation_started.emit()
+
+        directory = os.path.dirname(tex_file)
+
+        filename = os.path.basename(tex_file)
+
+        name_without_ext = os.path.splitext(filename)[0]
+
+        self.output_pdf = os.path.join(directory, f"{name_without_ext}.pdf")
+
+        args = ["-interaction=nonstopmode", "-synctex=1", filename]
+
+        self.process.setWorkingDirectory(directory)
+
+        self.process.start("pdflatex", args)
