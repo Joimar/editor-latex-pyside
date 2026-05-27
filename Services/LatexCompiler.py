@@ -36,6 +36,8 @@ class LatexCompiler(QObject):
         self.log_received.emit(text)
 
     def handle_stderr(self):
+        # Function that reads and sends all compilation errors to log
+
         data = self.process.readAllStandardError()
 
         text = bytes(data).decode()
@@ -43,6 +45,8 @@ class LatexCompiler(QObject):
         self.log_received.emit(text)
 
     def handle_finished(self, exit_code, exit_status):
+        # Function that reads and handle the code in the end of compilation
+
         if exit_code == 0:
             self.compilation_finished.emit(self.output_pdf)
 
