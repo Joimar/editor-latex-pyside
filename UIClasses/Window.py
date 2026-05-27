@@ -1,5 +1,9 @@
 # This Python file uses the following encoding: utf-8
 import os
+
+from PySide6.QtPdf import QPdfDocument
+from PySide6.QtPdfWidgets import QPdfView
+
 from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PySide6.QtWidgets import QMessageBox, QApplication
@@ -19,13 +23,11 @@ import subprocess
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
 
-
-
-
 class MainWindow(QMainWindow):
     __fontSizeWindow = None
     # Criando instância do serviço antes de usá-lo
     __service = TextEditorService()
+
     # Right side: WebEngine Visualizer
 
     def __init__(self, parent=None):
@@ -34,13 +36,21 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # creating PDF visualizer
-        self.__web_visualizer = QWebEngineView()
-        self.update_pdf_visualizer()
+        # PDF
+        self.pdf_document = QPdfDocument()
+        self.pdf_view = QPdfView()
+        self.pdf_view.setDocument(self.pdf_document)
+
+        # Adding PDF view and plainTextEdit to splitter
+        splitter = QSplitter(Qt.Horizontal)
+        splitter.addWidget(self.ui.plainTextEdit)
+        splitter.addWidget(self.pdf_view)
+        self.pdf_document.load("Olha o PDF.pdf")
+        splitter.setSizes([500, 500])
+        self.setCentralWidget(splitter)
+
         # Persistent Settings
         self.settings = QSettings("config.ini", QSettings.IniFormat)
-
-        splitter = QSplitter(Qt.Horizontal)
 
         self.highlighter = SpellCheckingHighLighter(self.ui.plainTextEdit.document())
         # File Actions
@@ -72,15 +82,10 @@ class MainWindow(QMainWindow):
         # loading persistent settings
         self.load_settings()
 
+
         # Spell Checker settings
 
         self.ui.plainTextEdit.document().modificationChanged.connect(self.__on_text_changed)
-
-        # Adding web visualizer and plainTextEdit to splitter
-        splitter.addWidget(self.ui.plainTextEdit)
-        splitter.addWidget(self.__web_visualizer)
-        splitter.setSizes([500, 500])
-        self.setCentralWidget(splitter)
 
         # Messages for external windows
         self.Export_pdf = AppStrings.EXPORT_PDF
@@ -318,13 +323,4 @@ class MainWindow(QMainWindow):
 
         self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
 
-
-    def update_pdf_visualizer(self):
-
-        viewer_path = os.path.abspath("resources/pdfjs/web/viewer.html")
-        pdf_path = os.path.abspath("Olha o PDF")
-        if os.path.exists(viewer_path):
-
-            url_completa = f"file://{viewer_path}?file=file://{pdf_path}"
-            self.__web_visualizer.setUrl(url_completa)
-            print("Viewer Exists")
+   
