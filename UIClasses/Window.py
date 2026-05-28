@@ -100,8 +100,6 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Text Editor")
 
-        # actions from font size window
-        # d = enchant.Dict("en_US")
 
     @Slot(bool)
     def __on_text_changed(self, changed):
@@ -119,10 +117,17 @@ class MainWindow(QMainWindow):
     # Open Functionalities are done
     def pressFileOpen(self):
         # Opens a specific txt file selected by user
-        file_path, _ = QFileDialog.getOpenFileName(self,
-                                                   QCoreApplication.translate(*AppStrings.OPEN_FILE), '', 'Text '
-                                                                                                          'files '
-                                                                                                          '(*.txt)')
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            QCoreApplication.translate(*AppStrings.OPEN_FILE),
+            "",
+            "LaTeX Files (*.tex);;"
+            "BibTeX Files (*.bib);;"
+            "Style Files (*.sty);;"
+            "Class Files (*.cls);;"
+            "All Supported Files (*.tex *.bib *.sty *.cls *.bst);;"
+            "All Files (*)"
+        )
         # preciso fazer com que o conteudo do text chegue ao service
         text = self.__service.open_file(file_path)
         # nao cabe ao Window averiguar se o texto esta vazio
