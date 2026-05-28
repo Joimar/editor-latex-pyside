@@ -2,6 +2,7 @@
 import os
 
 from PySide6.QtPdf import QPdfDocument
+from PySide6.QtPdfWidgets import QPdfView
 
 from Services.LatexCompiler import LatexCompiler
 #from PySide6.QtPdfWidgets import QPdfView
@@ -46,13 +47,15 @@ class MainWindow(QMainWindow):
         # PDF
         self.pdf_document = QPdfDocument()
         self.pdf_view = PdfView()
+        #self.pdf_view.setZoomMode(QPdfView.ZoomMode.Custom)
         self.pdf_view.setDocument(self.pdf_document)
+        self.pdf_view.setPageMode(QPdfView.PageMode.MultiPage)
 
         # Adding PDF view and plainTextEdit to splitter
         splitter = QSplitter(Qt.Horizontal)
         splitter.addWidget(self.ui.plainTextEdit)
         splitter.addWidget(self.pdf_view)
-        #self.pdf_document.load("Olha o PDF.pdf")
+
         self.pdf_document.load("sbc-template.pdf")
         splitter.setSizes([500, 500])
         self.setCentralWidget(splitter)
