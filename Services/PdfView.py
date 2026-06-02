@@ -2,10 +2,17 @@ from PySide6.QtCore import Qt
 from PySide6.QtPdfWidgets import QPdfView
 
 
+# new_zoom = current_zoom * 1.1
+#
+# new_zoom = max(MIN_ZOOM, min(MAX_ZOOM, new_zoom))
+#
+# self.setZoomFactor(new_zoom)
+
 class PdfView(QPdfView):
+    MIN_ZOOM = 0.25
+    MAX_ZOOM = 5.0
 
     def wheelEvent(self, event):
-
         if not (event.modifiers() & Qt.ControlModifier):
             return super().wheelEvent(event)
 
@@ -14,6 +21,7 @@ class PdfView(QPdfView):
         factor = 1.1 if event.angleDelta().y() > 0 else 1 / 1.1
 
         new_zoom = old_zoom * factor
+        new_zoom = max(self.MIN_ZOOM, min(self.MAX_ZOOM, new_zoom))
 
         # posição do mouse dentro da viewport
         mouse_pos = event.position()
