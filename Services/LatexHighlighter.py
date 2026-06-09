@@ -31,7 +31,16 @@ class LatexHighlighter(QSyntaxHighlighter):
         comment_format = QTextCharFormat()
         comment_format.setForeground(QColor("#6A9955"))
 
-        self.rules.append((QRegularExpression(r"%.*"),comment_format))
+        self.rules.append((QRegularExpression(r"%.*"), comment_format))
+
+        # -------------------
+        # Inline Math
+        # -------------------
+
+        math_format = QTextCharFormat()
+        math_format.setForeground(QColor("#DCDCAA"))
+
+        self.rules.append((QRegularExpression(r"\$[^$]+\$"),math_format))
 
     def highlightBlock(self, text):
 
