@@ -23,7 +23,7 @@ class PdfView(QPdfView):
         new_zoom = old_zoom * factor
         new_zoom = max(self.MIN_ZOOM, min(self.MAX_ZOOM, new_zoom))
 
-        # posição do mouse dentro da viewport
+        # mouse's position in the viewport
         mouse_pos = event.position()
 
         # scrollbars antes do zoom
@@ -35,7 +35,7 @@ class PdfView(QPdfView):
         self.setZoomMode(QPdfView.ZoomMode.Custom)
         self.setZoomFactor(new_zoom)
 
-        # compensação
+        # compensation
         self.horizontalScrollBar().setValue(
             int((h_before + mouse_pos.x()) * ratio - mouse_pos.x())
         )

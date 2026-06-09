@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from PySide6.QtCore import (
     QObject,
     Signal,
@@ -54,6 +56,11 @@ class LatexCompiler(QObject):
             self.compilation_failed.emit(f"Compilation error (code = {exit_code})")
 
     def compile(self, tex_file):
+
+        if self.process.state() != QProcess.NotRunning:
+            self.process.kill()
+
+        tex_path = Path(tex_file)
 
         self.compilation_started.emit()
 

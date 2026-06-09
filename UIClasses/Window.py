@@ -5,7 +5,7 @@ from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 
 from Services.LatexCompiler import LatexCompiler
-#from PySide6.QtPdfWidgets import QPdfView
+# from PySide6.QtPdfWidgets import QPdfView
 
 from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -24,7 +24,6 @@ from UIFiles.UIMainWindow import Ui_MainWindow
 from Services.TextEditorService import TextEditorService
 from Services.PdfView import PdfView
 import subprocess
-
 
 
 class MainWindow(QMainWindow):
@@ -47,7 +46,7 @@ class MainWindow(QMainWindow):
         # PDF
         self.pdf_document = QPdfDocument()
         self.pdf_view = PdfView()
-        #self.pdf_view.setZoomMode(QPdfView.ZoomMode.Custom)
+
         self.pdf_view.setDocument(self.pdf_document)
         self.pdf_view.setPageMode(QPdfView.PageMode.MultiPage)
 
@@ -93,7 +92,6 @@ class MainWindow(QMainWindow):
         # loading persistent settings
         self.load_settings()
 
-
         # Spell Checker settings
 
         self.ui.plainTextEdit.document().modificationChanged.connect(self.__on_text_changed)
@@ -102,7 +100,6 @@ class MainWindow(QMainWindow):
         self.Export_pdf = AppStrings.EXPORT_PDF
 
         self.setWindowTitle("Text Editor")
-
 
     @Slot(bool)
     def __on_text_changed(self, changed):
@@ -338,4 +335,3 @@ class MainWindow(QMainWindow):
             self.apply_stylesheet(AppTheme.LIGHT)
 
         self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
-
