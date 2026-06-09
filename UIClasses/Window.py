@@ -5,6 +5,7 @@ from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 
 from Services.LatexCompiler import LatexCompiler
+from Services.LatexHighlighter import LatexHighlighter
 # from PySide6.QtPdfWidgets import QPdfView
 
 from Utils.AppStrings import AppStrings
@@ -62,7 +63,10 @@ class MainWindow(QMainWindow):
         # Persistent Settings
         self.settings = QSettings("config.ini", QSettings.IniFormat)
 
+        # Setting Hilighters
         self.highlighter = SpellCheckingHighLighter(self.ui.plainTextEdit.document())
+        self.latex_highlighter = LatexHighlighter(self.ui.plainTextEdit.document())
+
         # File Actions
         self.ui.actionNew.triggered.connect(self.press_file_new)
         self.ui.actionSave.triggered.connect(self.pressFileSave)
