@@ -40,7 +40,7 @@ class LatexHighlighter(QSyntaxHighlighter):
         math_format = QTextCharFormat()
         math_format.setForeground(QColor("#DCDCAA"))
 
-        self.rules.append((QRegularExpression(r"\$[^$]+\$"),math_format))
+        self.rules.append((QRegularExpression(r"\$[^$]+\$"), math_format))
 
         # -------------------
         # Arguments
@@ -50,6 +50,15 @@ class LatexHighlighter(QSyntaxHighlighter):
         argument_format.setForeground(QColor("#CE9178"))
 
         self.rules.append((QRegularExpression(r"\{[^{}]*\}"), argument_format))
+
+        # -------------------
+        # Optional Highlight
+        # -------------------
+
+        optional_format = QTextCharFormat()
+        optional_format.setForeground(QColor("#4EC9B0"))
+
+        self.rules.append((QRegularExpression(r"\[[^\]]*\]"), optional_format))
 
     def highlightBlock(self, text):
 
