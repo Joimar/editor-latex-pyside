@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
         # Compiler Testing
         self.compiler = LatexCompiler()
         self.compiler.compilation_failed.connect(self.on_compilation_failed)
+        self.compiler.compilation_warning.connect(self.on_compilation_warnning)
         self.compiler.compile("sbc-template1.tex")
 
         # PDF
@@ -57,7 +58,7 @@ class MainWindow(QMainWindow):
         splitter.addWidget(self.ui.plainTextEdit)
         splitter.addWidget(self.pdf_view)
 
-        self.pdf_document.load("sbc-template.pdf")
+        self.pdf_document.load("sbc-template1.pdf")
         splitter.setSizes([500, 500])
         self.setCentralWidget(splitter)
 
@@ -342,4 +343,7 @@ class MainWindow(QMainWindow):
         self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
 
     def on_compilation_failed(self, message):
+        print(message)
+
+    def on_compilation_warnning(self, message):
         print(message)

@@ -14,6 +14,7 @@ class LatexCompiler(QObject):
     compilation_finished = Signal(str)
     compilation_failed = Signal(str)
     log_received = Signal(str)
+    compilation_warning = Signal(str)
 
     def __init__(self):
         super().__init__()
@@ -53,8 +54,15 @@ class LatexCompiler(QObject):
     def handle_finished(self, exit_code, exit_status):
         # Function that reads and handle the code in the end of compilation
 
-        if exit_code == 0:
+        pdf_file = Path(self.output_pdf)
+
+        # Check if the PDF file was generated after process is finished
+        if pdf_file.exists():
             self.compilation_finished.emit(self.output_pdf)
+
+            if exit_code != 0:
+                self.log_received.emit("\nCompilation completed with warnings/errors.\n")
+                self.compilation_warning.emit("PDF generated with errors")
 
         else:
             self.compilation_failed.emit(f"Compilation error (code = {exit_code})")
