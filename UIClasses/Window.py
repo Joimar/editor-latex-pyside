@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
         # Compiler Testing
         self.compiler = LatexCompiler()
         self.compiler.compilation_failed.connect(self.on_compilation_failed)
-        self.compiler.compile("sbc-template121.tex")
+        self.compiler.compile("sbc-template1.tex")
 
         # PDF
         self.pdf_document = QPdfDocument()

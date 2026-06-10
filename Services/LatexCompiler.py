@@ -68,6 +68,11 @@ class LatexCompiler(QObject):
         if self.process.state() != QProcess.NotRunning:
             self.process.kill()
 
+    @property
+    def is_compiling(self):
+
+        return self.process.state() != QProcess.NotRunning
+
     def compile(self, tex_file):
 
         if self.process.state() != QProcess.NotRunning:
@@ -76,7 +81,7 @@ class LatexCompiler(QObject):
         tex_path = Path(tex_file)
 
         if not tex_path.exists():
-            print("ARQUIVO NÃO EXISTE")
+
             self.compilation_failed.emit(f"File not found: {tex_file}")
             return
 
