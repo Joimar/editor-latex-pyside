@@ -13,7 +13,7 @@ from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PySide6.QtWidgets import QMessageBox, QApplication, QCompleter
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QSplitter
-from PySide6.QtCore import QCoreApplication, QTranslator, Qt, QUrl
+from PySide6.QtCore import QCoreApplication, QTranslator, Qt, QUrl, QEvent
 from PySide6.QtCore import Slot
 from Services.SpellCheckingHighLighter import SpellCheckingHighLighter
 from StyleFiles.AppThemes import AppTheme
@@ -41,6 +41,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.ui.plainTextEdit.installEventFilter(self)
         # Compiler Testing
         self.compiler = LatexCompiler()
         self.compiler.compilation_failed.connect(self.on_compilation_failed)
@@ -367,3 +368,17 @@ class MainWindow(QMainWindow):
 
         cursor.insertText(completion)
         self.ui.plainTextEdit.setTextCursor(cursor)
+
+    def eventFilter(self, obj, event):
+
+        # Verifica se o evento veio do plainTextEdit e se é um pressionamento de tecla
+        if obj == self.ui.plainTextEdit and event.type() == QEvent.Type.KeyPress:
+            print(f"Tecla pressionada no editor: {event.text()}")
+
+            # Se for a tecla Tab, por exemplo, e você quiser customizar o comportamento:
+            # if event.key() == Qt.Key.Key_Tab:
+            #     # Sua lógica para o completer aqui
+            #     return True # Retorna True para dizer que você tratou o evento (bloqueia o Tab padrão)
+
+        # Importante: repassa todos os outros eventos adiante para o comportamento padrão continuar funcionando
+        return super().eventFilter(obj, event)
