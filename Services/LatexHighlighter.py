@@ -19,7 +19,6 @@ class LatexHighlighter(QSyntaxHighlighter):
         # -------------------
 
         command_format = QTextCharFormat()
-
         command_format.setForeground(QColor("#569CD6"))
 
         self.rules.append((QRegularExpression(r"\\[a-zA-Z]+"), command_format))
@@ -32,6 +31,14 @@ class LatexHighlighter(QSyntaxHighlighter):
         comment_format.setForeground(QColor("#6A9955"))
 
         self.rules.append((QRegularExpression(r"%.*"), comment_format))
+
+        # -------------------
+        # Environment Highlight
+        # -------------------
+
+        environment_format = QTextCharFormat()
+        environment_format.setForeground(QColor("#C586C0"))
+        self.rules.append((QRegularExpression(r"\\(begin|end)\{[^}]+\}"), environment_format))
 
         # -------------------
         # Inline Math
