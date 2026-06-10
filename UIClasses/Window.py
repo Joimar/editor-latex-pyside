@@ -42,7 +42,8 @@ class MainWindow(QMainWindow):
 
         # Compiler Testing
         self.compiler = LatexCompiler()
-        self.compiler.compile("sbc-template.tex")
+        self.compiler.compilation_failed.connect(self.on_compilation_failed)
+        self.compiler.compile("sbc-template121.tex")
 
         # PDF
         self.pdf_document = QPdfDocument()
@@ -339,3 +340,6 @@ class MainWindow(QMainWindow):
             self.apply_stylesheet(AppTheme.LIGHT)
 
         self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
+
+    def on_compilation_failed(self, message):
+        print(message)

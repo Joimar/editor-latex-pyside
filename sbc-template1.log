@@ -1,9 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.23)  10 JUN 2026 13:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.23)  10 JUN 2026 14:02
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**./sbc-template.tex
-(sbc-template.tex
+**./sbc-template1.tex
+(sbc-template1.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (C:\Users\Joimar\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -158,8 +159,8 @@ ftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count269
 \l__pdf_internal_box=\box53
-) (sbc-template.aux)
-\openout1 = `sbc-template.aux'.
+) (sbc-template1.aux)
+\openout1 = `sbc-template1.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
 LaTeX Font Info:    ... okay on input line 41.
@@ -277,7 +278,8 @@ mar/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
 LaTeX Warning: File `fig1.jpg' not found on input line 123.
 
 
-! Package pdftex.def Error: File `fig1.jpg' not found: using draft setting.
+sbc-template1.tex:123: Package pdftex.def Error: File `fig1.jpg' not found: usi
+ng draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
@@ -297,7 +299,8 @@ File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
 LaTeX Warning: File `fig2.jpg' not found on input line 130.
 
 
-! Package pdftex.def Error: File `fig2.jpg' not found: using draft setting.
+sbc-template1.tex:130: Package pdftex.def Error: File `fig2.jpg' not found: usi
+ng draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
@@ -312,7 +315,8 @@ If that doesn't work, type  X <return>  to quit.
 LaTeX Warning: File `table.jpg' not found on input line 148.
 
 
-! Package pdftex.def Error: File `table.jpg' not found: using draft setting.
+sbc-template1.tex:148: Package pdftex.def Error: File `table.jpg' not found: us
+ing draft setting.
 
 See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
@@ -333,8 +337,8 @@ LaTeX Warning: Citation `boulic:91' on page 2 undefined on input line 164.
 LaTeX Warning: Citation `smith:99' on page 2 undefined on input line 164.
 
 [2]
-No file sbc-template.bbl.
-[3] [4] (sbc-template.aux)
+No file sbc-template1.bbl.
+[3] [4] (sbc-template1.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
@@ -345,13 +349,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4216 strings out of 474486
- 70756 string characters out of 5743283
+ 4217 strings out of 474486
+ 70783 string characters out of 5743283
  1938542 words of memory out of 5000000
  26433 multiletter control sequences out of 15000+600000
  580853 words of font info for 75 fonts, out of 8000000 for 9000
  1156 hyphenation exceptions out of 8191
- 72i,11n,79p,288b,387s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,79p,289b,387s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Joimar/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
 /cmmi12.pfb><C:/Users/Joimar/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmr8.pfb><C:/Users/Joimar/AppData/Local/Programs/MiKTeX/fonts/type1/
@@ -362,7 +366,7 @@ KTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Joimar/AppData/Local/Programs/M
 iKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Joimar/AppData/Local/Programs
 /MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Joimar/AppData/Local/Program
 s/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on sbc-template.pdf (4 pages, 121083 bytes).
+Output written on sbc-template1.pdf (4 pages, 121083 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
