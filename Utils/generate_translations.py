@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 from Utils.AppStrings import AppStrings
 
+
 # This script creates .ts files without strings line number dependency
 
 def generate_translation_template():

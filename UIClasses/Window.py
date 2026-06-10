@@ -10,7 +10,7 @@ from Services.LatexHighlighter import LatexHighlighter
 
 from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
-from PySide6.QtWidgets import QMessageBox, QApplication
+from PySide6.QtWidgets import QMessageBox, QApplication, QCompleter
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QMainWindow, QFileDialog, QSplitter
 from PySide6.QtCore import QCoreApplication, QTranslator, Qt, QUrl
@@ -24,7 +24,8 @@ from UIFiles.UIMainWindow import Ui_MainWindow
 
 from Services.TextEditorService import TextEditorService
 from Services.PdfView import PdfView
-import subprocess
+
+from Utils.LatexCommandsCompleter import LatexCommandsCompleter
 
 
 class MainWindow(QMainWindow):
@@ -45,6 +46,12 @@ class MainWindow(QMainWindow):
         self.compiler.compilation_failed.connect(self.on_compilation_failed)
         self.compiler.compilation_warning.connect(self.on_compilation_warnning)
         self.compiler.compile("sbc-template1.tex")
+
+        # Setting completer
+        self.completer = QCompleter(LatexCommandsCompleter.LATEX_COMMANDS, self.ui.plainTextEdit)
+        self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+        self.completer.setWidget(self.ui.plainTextEdit)
+        self.completer.activated.connect(self.insert_completion)
 
         # PDF
         self.pdf_document = QPdfDocument()
@@ -343,7 +350,20 @@ class MainWindow(QMainWindow):
         self.ui.plainTextEdit.setFont(QFont("Arial", int(self.settings.value("font_size", 11))))
 
     def on_compilation_failed(self, message):
+
         print(message)
 
     def on_compilation_warnning(self, message):
+
         print(message)
+
+    def insert_completion(self, completion):
+
+        cursor = self.ui.plainTextEdit.textCursor()
+        prefix_length = len(self.completer.completionPrefix())
+
+        for _ in range(prefix_length):
+            cursor.deletePreviousChar()
+
+        cursor.insertText(completion)
+        self.ui.plainTextEdit.setTextCursor(cursor)
