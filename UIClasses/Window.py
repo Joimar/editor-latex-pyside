@@ -369,16 +369,43 @@ class MainWindow(QMainWindow):
         cursor.insertText(completion)
         self.ui.plainTextEdit.setTextCursor(cursor)
 
+    def current_command(self):
+
+        cursor = self.ui.plainTextEdit.textCursor()
+        line = cursor.block().text()
+        position = cursor.positionInBlock()
+        text = line[:position]
+        idx = text.rfind("\\")
+
+        if idx == -1:
+            return ""
+
+        return text[idx:]
+
     def eventFilter(self, obj, event):
 
         # Verifica se o evento veio do plainTextEdit e se é um pressionamento de tecla
         if obj == self.ui.plainTextEdit and event.type() == QEvent.Type.KeyPress:
             print(f"Tecla pressionada no editor: {event.text()}")
 
-            # Se for a tecla Tab, por exemplo, e você quiser customizar o comportamento:
-            # if event.key() == Qt.Key.Key_Tab:
-            #     # Sua lógica para o completer aqui
-            #     return True # Retorna True para dizer que você tratou o evento (bloqueia o Tab padrão)
+            prefix = self.current_command()
+
+            if len(prefix) < 2:
+
+                self.completer.popup().hide()
+                return super().eventFilter(obj, event)
+
+            self.completer.setCompletionPrefix(prefix)
+
+            popup = self.completer.popup()
+
+            popup.setCurrentIndex(self.completer.completionModel().index(0, 0))
+
+            rect = self.ui.plainTextEdit.cursorRect()
+
+            rect.setWidth(popup.sizeHintForColumn(0) + popup.verticalScrollBar().sizeHint().width())
+            self.completer.complete(rect)
+
 
         # Importante: repassa todos os outros eventos adiante para o comportamento padrão continuar funcionando
         return super().eventFilter(obj, event)
