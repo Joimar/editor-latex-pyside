@@ -361,10 +361,8 @@ class MainWindow(QMainWindow):
     def insert_completion(self, completion):
 
         cursor = self.ui.plainTextEdit.textCursor()
-        prefix_length = len(self.completer.completionPrefix())
-
-        for _ in range(prefix_length):
-            cursor.deletePreviousChar()
+        prefix = self.current_command()
+        cursor.movePosition(cursor.MoveOperation.Left, cursor.MoveMode.KeepAnchor, len(prefix))
 
         cursor.insertText(completion)
         self.ui.plainTextEdit.setTextCursor(cursor)
@@ -391,7 +389,6 @@ class MainWindow(QMainWindow):
             prefix = self.current_command()
 
             if len(prefix) < 2:
-
                 self.completer.popup().hide()
                 return super().eventFilter(obj, event)
 
@@ -405,7 +402,6 @@ class MainWindow(QMainWindow):
 
             rect.setWidth(popup.sizeHintForColumn(0) + popup.verticalScrollBar().sizeHint().width())
             self.completer.complete(rect)
-
 
         # Importante: repassa todos os outros eventos adiante para o comportamento padrão continuar funcionando
         return super().eventFilter(obj, event)
