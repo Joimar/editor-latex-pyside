@@ -403,5 +403,9 @@ class MainWindow(QMainWindow):
             rect.setWidth(popup.sizeHintForColumn(0) + popup.verticalScrollBar().sizeHint().width())
             self.completer.complete(rect)
 
+            # Close Pupop when enter or space is pressed
+            if event.key() in (Qt.Key.Key_Return, Qt.Key.Key_Enter, Qt.Key.Key_Space):
+                popup.close()
+
         # Importante: repassa todos os outros eventos adiante para o comportamento padrão continuar funcionando
         return super().eventFilter(obj, event)

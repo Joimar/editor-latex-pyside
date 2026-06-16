@@ -61,3 +61,4 @@ class TextEditorService:
 
     def get_modified(self):
         return self._is_modified
+
