@@ -17,8 +17,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QMainWindow, QMenu,
-    QMenuBar, QPlainTextEdit, QSizePolicy, QStatusBar,
-    QWidget)
+    QMenuBar, QPlainTextEdit, QPushButton, QSizePolicy,
+    QStatusBar, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -66,7 +66,15 @@ class Ui_MainWindow(object):
         self.plainTextEdit = QPlainTextEdit(self.centralwidget)
         self.plainTextEdit.setObjectName(u"plainTextEdit")
 
-        self.gridLayout.addWidget(self.plainTextEdit, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.plainTextEdit, 1, 0, 1, 1)
+
+        self.compileButton = QPushButton(self.centralwidget)
+        self.compileButton.setObjectName(u"compileButton")
+        icon = QIcon()
+        icon.addFile(u"../Assets/play.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.compileButton.setIcon(icon)
+
+        self.gridLayout.addWidget(self.compileButton, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -156,6 +164,7 @@ class Ui_MainWindow(object):
         self.actionde.setText(QCoreApplication.translate("MainWindow", u"de", None))
         self.actionen.setText(QCoreApplication.translate("MainWindow", u"en", None))
         self.actionru.setText(QCoreApplication.translate("MainWindow", u"ru", None))
+        self.compileButton.setText("")
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuEdit.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))
         self.menuAppearance.setTitle(QCoreApplication.translate("MainWindow", u"Appearance", None))

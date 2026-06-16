@@ -41,6 +41,12 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # Setting compile button
+        self.ui.compileButton.setVisible(True)
+        self.ui.compileButton.show()
+        self.ui.compileButton.setFixedSize(120, 120)
+        self.ui.compileButton.setText("TESTE")
+
         self.ui.plainTextEdit.installEventFilter(self)
         # Compiler Testing
         self.compiler = LatexCompiler()
@@ -68,7 +74,8 @@ class MainWindow(QMainWindow):
 
         self.pdf_document.load("sbc-template1.pdf")
         splitter.setSizes([500, 500])
-        self.setCentralWidget(splitter)
+        self.ui.centralwidget.layout().addWidget(splitter)
+        #self.setCentralWidget(splitter)
 
         # Persistent Settings
         self.settings = QSettings("config.ini", QSettings.IniFormat)

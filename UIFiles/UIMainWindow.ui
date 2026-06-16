@@ -15,8 +15,19 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QPlainTextEdit" name="plainTextEdit"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="compileButton">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../Assets/play.png</normaloff>../Assets/play.png</iconset>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
