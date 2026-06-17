@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 
 class FileManager:
@@ -48,3 +49,10 @@ class FileManager:
                 f.write(content)
         except Exception as error:
             print(f"Error when trying to add content to file: {error}")
+
+    @staticmethod
+    def get_file_name(file_path: str):
+
+        if not Path(file_path).exists():
+            raise FileNotFoundError(f"Required file missing: {Path(file_path)}")
+        return Path(file_path).name

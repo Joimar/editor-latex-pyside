@@ -8,6 +8,7 @@ class TextEditorService:
         # self._current_text = ""
 
         self._file_path = ""
+        self.file_name = ""
         self._is_modified = False
         self.__text = ""
 
@@ -22,6 +23,8 @@ class TextEditorService:
     def open_file(self, file_path):
         if file_path:
             self._file_path = file_path
+            self.file_name = FileManager.get_file_name(self._file_path)
+            print("Arquivo tex: " + self._file_path)
             return FileManager.read(file_path)
 
         return None

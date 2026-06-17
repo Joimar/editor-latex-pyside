@@ -4,10 +4,6 @@ import os
 from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 
-from Services.LatexCompiler import LatexCompiler
-from Services.LatexHighlighter import LatexHighlighter
-# from PySide6.QtPdfWidgets import QPdfView
-
 from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PySide6.QtWidgets import QMessageBox, QApplication, QCompleter
@@ -18,6 +14,9 @@ from PySide6.QtCore import Slot
 from Services.SpellCheckingHighLighter import SpellCheckingHighLighter
 from StyleFiles.AppThemes import AppTheme
 from PySide6.QtCore import QSettings
+
+from Services.LatexCompiler import LatexCompiler
+from Services.LatexHighlighter import LatexHighlighter
 
 from UIClasses.FontSizeWindow import FontSizeWindow
 from UIFiles.UIMainWindow import Ui_MainWindow
@@ -43,8 +42,12 @@ class MainWindow(QMainWindow):
 
         # Setting compile button
         self.ui.compileButton.setIcon(QIcon("C:\\Users\\Joimar\\IdeaProjects\\Latex_editor_pyside\\Assets\\play.png"))
+        self.ui.compileButton.setFixedSize(25,25)
+        self.ui.compileButton.pressed.connect(self.pressCompile)
 
+        # setting event filter
         self.ui.plainTextEdit.installEventFilter(self)
+
         # Compiler Testing
         self.compiler = LatexCompiler()
         self.compiler.compilation_failed.connect(self.on_compilation_failed)
@@ -412,3 +415,8 @@ class MainWindow(QMainWindow):
 
         # Importante: repassa todos os outros eventos adiante para o comportamento padrão continuar funcionando
         return super().eventFilter(obj, event)
+
+    def pressCompile(self):
+
+        print("Compilar")
+        self.compiler.compile(self.__service.get_file_path())
