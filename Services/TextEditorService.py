@@ -9,16 +9,11 @@ class TextEditorService:
 
         self._file_path = ""
         self.file_name = ""
-        self._is_modified = False
         self.__text = ""
-
-    def on_text_changed(self, changed):
-        self._is_modified = changed
 
     def new_file(self):
         # self._current_text = ""
         self._file_path = ""
-        self._is_modified = False
 
     def open_file(self, file_path):
         if file_path:
@@ -51,7 +46,6 @@ class TextEditorService:
 
     def set_text(self, text):
         self.__text = text
-        self._is_modified = True
 
     def get_file_path(self):
         return self._file_path
@@ -62,6 +56,4 @@ class TextEditorService:
     def get_file_name(self):
         return "Untitled" if not self._file_path else os.path.basename(self._file_path)
 
-    def get_modified(self):
-        return self._is_modified
 

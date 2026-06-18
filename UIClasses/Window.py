@@ -126,8 +126,6 @@ class MainWindow(QMainWindow):
     @Slot(bool)
     def __on_text_changed(self, changed):
 
-        self.__service.on_text_changed(changed)
-
         self.updateWindowTitle()
 
     def press_file_new(self):
@@ -163,7 +161,7 @@ class MainWindow(QMainWindow):
             self.pressFileSaveAs()
         else:
             self.ui.plainTextEdit.document().setModified(False)
-            self.__service._is_modified = False
+
 
     def pressFileSaveAs(self):
         # save a file or modification when user clicks in save option
@@ -228,7 +226,7 @@ class MainWindow(QMainWindow):
         # overwritten method to trigger an event when user closes the program
         # calls a dialog asking if user wants to save or discard the changes
 
-        if self.__service.get_modified():
+        if self.ui.plainTextEdit.document().isModified():
             box = QMessageBox()
             box.setWindowTitle(AppStrings.PROGRAM_NAME[1])
             box.setText(QCoreApplication.translate(*AppStrings.SAVE_CHANGES_QUESTION))
