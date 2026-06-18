@@ -163,6 +163,7 @@ class MainWindow(QMainWindow):
             self.pressFileSaveAs()
         else:
             self.ui.plainTextEdit.document().setModified(False)
+            self.__service._is_modified = False
 
     def pressFileSaveAs(self):
         # save a file or modification when user clicks in save option
@@ -420,7 +421,6 @@ class MainWindow(QMainWindow):
 
     def pressCompile(self):
 
-        print("Compilar")
         self.pressFileSave()
 
         self.compiler.compile(self.__service.get_file_path())
