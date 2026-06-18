@@ -30,8 +30,8 @@ class TextEditorService:
         return None
 
     def save_file(self, text):
-        if self.file_exist():
-            FileManager.updatingFile(self._file_path, text)
+        if self.file_exist() and FileManager.updatingFile(self._file_path, text):
+
             self.set_text(text)
             return True
 

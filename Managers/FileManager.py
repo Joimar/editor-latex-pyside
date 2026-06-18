@@ -21,9 +21,11 @@ class FileManager:
         try:
             with open(file_path, "w") as f:
                 f.write(content)
+            return True
 
         except FileExistsError as error:
             print(f"Error when trying to update file: {error}.")
+            return False
 
     @staticmethod
     def read(file_path):
@@ -56,3 +58,8 @@ class FileManager:
         if not Path(file_path).exists():
             raise FileNotFoundError(f"Required file missing: {Path(file_path)}")
         return Path(file_path).name
+
+    @staticmethod
+    def get_file_path(file_path:str):
+
+        return Path(file_path)

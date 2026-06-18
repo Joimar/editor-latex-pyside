@@ -4,6 +4,7 @@ import os
 from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
 
+from Managers.FileManager import FileManager
 from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PySide6.QtWidgets import QMessageBox, QApplication, QCompleter
@@ -42,7 +43,7 @@ class MainWindow(QMainWindow):
 
         # Setting compile button
         self.ui.compileButton.setIcon(QIcon("C:\\Users\\Joimar\\IdeaProjects\\Latex_editor_pyside\\Assets\\play.png"))
-        self.ui.compileButton.setFixedSize(25,25)
+        self.ui.compileButton.setFixedSize(25, 25)
         self.ui.compileButton.pressed.connect(self.pressCompile)
 
         # setting event filter
@@ -52,7 +53,8 @@ class MainWindow(QMainWindow):
         self.compiler = LatexCompiler()
         self.compiler.compilation_failed.connect(self.on_compilation_failed)
         self.compiler.compilation_warning.connect(self.on_compilation_warnning)
-        self.compiler.compile("sbc-template1.tex")
+        self.compiler.compilation_finished.connect(self.loadPdf)
+        # self.compiler.compile("sbc-template1.tex")
 
         # Setting completer
         self.completer = QCompleter(LatexCommandsCompleter.LATEX_COMMANDS, self.ui.plainTextEdit)
@@ -72,7 +74,7 @@ class MainWindow(QMainWindow):
         splitter.addWidget(self.ui.plainTextEdit)
         splitter.addWidget(self.pdf_view)
 
-        self.pdf_document.load("sbc-template1.pdf")
+        # self.pdf_document.load("sbc-template1.pdf")
         splitter.setSizes([500, 500])
         self.ui.centralwidget.layout().addWidget(splitter)
 
@@ -419,4 +421,14 @@ class MainWindow(QMainWindow):
     def pressCompile(self):
 
         print("Compilar")
+        self.pressFileSave()
+
         self.compiler.compile(self.__service.get_file_path())
+
+    def loadPdf(self):
+
+        file_tex_path = FileManager.get_file_path(self.__service.get_file_path())
+
+        pdf = str(file_tex_path.with_suffix(".pdf"))
+        print("Caminho do PDF: " + pdf)
+        self.pdf_document.load(pdf)

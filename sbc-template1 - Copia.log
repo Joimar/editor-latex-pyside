@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.23)  17 JUN 2026 13:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.23)  18 JUN 2026 12:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -159,8 +159,7 @@ ftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count269
 \l__pdf_internal_box=\box53
-)
-No file "sbc-template1 - Copia".aux.
+) (sbc-template1 - Copia.aux)
 \openout1 = `"sbc-template1 - Copia.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
@@ -177,6 +176,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
 LaTeX Font Info:    ... okay on input line 41.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
 LaTeX Font Info:    ... okay on input line 41.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -275,14 +275,6 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 {C:/Users/Joimar/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Joi
 mar/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
 
-LaTeX Warning: Reference `fig:exampleFig1' on page 2 undefined on input line 11
-6.
-
-
-LaTeX Warning: Reference `fig:exampleFig2' on page 2 undefined on input line 11
-7.
-
-
 LaTeX Warning: File `fig1.jpg' not found on input line 123.
 
 
@@ -320,12 +312,6 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Reference `sec:figs' on page 2 undefined on input line 132.
-
-
-LaTeX Warning: Reference `sec:figs' on page 2 undefined on input line 132.
-
-
 LaTeX Warning: File `table.jpg' not found on input line 148.
 
 
@@ -361,16 +347,13 @@ L3 programming layer <2024-01-04>
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 4218 strings out of 474486
- 70868 string characters out of 5743283
+ 4220 strings out of 474486
+ 70993 string characters out of 5743283
  1938542 words of memory out of 5000000
- 26435 multiletter control sequences out of 15000+600000
- 582479 words of font info for 77 fonts, out of 8000000 for 9000
+ 26436 multiletter control sequences out of 15000+600000
+ 580853 words of font info for 75 fonts, out of 8000000 for 9000
  1156 hyphenation exceptions out of 8191
  72i,11n,79p,299b,387s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Joimar/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
@@ -383,7 +366,7 @@ KTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Joimar/AppData/Local/Programs/M
 iKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/Joimar/AppData/Local/Programs
 /MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Joimar/AppData/Local/Program
 s/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "sbc-template1 - Copia.pdf" (4 pages, 121004 bytes).
+Output written on "sbc-template1 - Copia.pdf" (4 pages, 121608 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
