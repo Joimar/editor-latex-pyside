@@ -3,7 +3,7 @@ import os
 
 from PySide6.QtPdf import QPdfDocument
 from PySide6.QtPdfWidgets import QPdfView
-
+from PySide6.QtCore import QTimer
 from Managers.FileManager import FileManager
 from Utils.AppStrings import AppStrings
 from PySide6.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -78,19 +78,23 @@ class MainWindow(QMainWindow):
         splitter.setSizes([500, 500])
         self.ui.centralwidget.layout().addWidget(splitter)
 
+        # setting compiler timer
+        self.auto_compile_timer = QTimer()
+        self.auto_compile_timer.setSingleShot(True)
+        self.auto_compile_timer.setInterval(800)
+        self.auto_compile_timer.timeout.connect(self.on_auto_compile_timeout)
+
         # Persistent Settings
         self.settings = QSettings("config.ini", QSettings.IniFormat)
 
-        # Setting Hilighters
+        # Setting Highlighters
         self.highlighter = SpellCheckingHighLighter(self.ui.plainTextEdit.document())
         self.latex_highlighter = LatexHighlighter(self.ui.plainTextEdit.document())
 
         # File Actions
         self.ui.actionNew.triggered.connect(self.press_file_new)
         self.ui.actionSave.triggered.connect(self.pressFileSave)
-        self.ui.actionSave.triggered.connect(self.ui.plainTextEdit.textChanged)
         self.ui.actionSave_as.triggered.connect(self.pressFileSaveAs)
-        self.ui.actionSave_as.triggered.connect(self.ui.plainTextEdit.textChanged)
         self.ui.actionOpen.triggered.connect(self.pressFileOpen)
         self.ui.actionPrint.triggered.connect(self.pressFilePrint)
         self.ui.actionExport_PDF.triggered.connect(self.pressExportPDF)
@@ -115,7 +119,7 @@ class MainWindow(QMainWindow):
         self.load_settings()
 
         # Spell Checker settings
-
+        self.ui.plainTextEdit.textChanged.connect(self.schedule_compilation)
         self.ui.plainTextEdit.document().modificationChanged.connect(self.__on_text_changed)
 
         # Messages for external windows
@@ -263,14 +267,12 @@ class MainWindow(QMainWindow):
         # print("Font Size: " + str(self.ui.plainTextEdit.fontInfo().pointSize()))
         # print("Font Style: " + str(self.ui.plainTextEdit.fontInfo().style()))
         self.__fontSizeWindow.ui.spinBox.setValue(int(self.settings.value("font_size", 11)))
-
         self.__fontSizeWindow.ui.spinBox.valueChanged.connect(self.updateFontSize)
-
         self.__fontSizeWindow.show()
 
     def updateFontSize(self):
-        self.ui.plainTextEdit.setFont(QFont('Arial', self.__fontSizeWindow.ui.spinBox.value()))
 
+        self.ui.plainTextEdit.setFont(QFont('Arial', self.__fontSizeWindow.ui.spinBox.value()))
         self.settings.setValue("font_size", self.__fontSizeWindow.ui.spinBox.value())
 
     def updateWindowTitle(self):
@@ -420,11 +422,38 @@ class MainWindow(QMainWindow):
     def pressCompile(self):
 
         self.pressFileSave()
-        self.compiler.compile(self.__service.get_file_path())
+        if FileManager.checkFile(self.__service.get_file_path()):
+            self.compiler.compile(self.__service.get_file_path())
+        else: print("No file selected")
 
     def loadPdf(self, pdf_path):
-
+        print("Load PDF")
         file_tex_path = FileManager.get_file_path(pdf_path)
         pdf = str(file_tex_path.with_suffix(".pdf"))
 
         self.pdf_document.load(pdf)
+
+    def schedule_compilation(self):
+        """Reinicia o timer toda vez que o usuário digita.
+            Se o timer já estiver rodando, ele é parado e reiniciado.
+            Assim, a compilação só ocorre após X ms de inatividade."""
+        if not self.__service.get_file_path():
+            return
+
+        if self.auto_compile_timer.isActive():
+            self.auto_compile_timer.stop()
+
+        self.auto_compile_timer.start()
+
+    @Slot()
+    def on_auto_compile_timeout(self):
+        """Chamado quando o timer expira (usuário parou de digitar)."""
+        if self.compiler.is_compiling:
+            # Se já está compilando, reagenda para tentar depois
+            self.auto_compile_timer.start()
+            return
+
+        self.pressCompile()
+    def auto_compile(self):
+        if self.compiler.is_compiling:
+            return

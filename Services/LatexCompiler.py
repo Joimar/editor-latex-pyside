@@ -20,11 +20,8 @@ class LatexCompiler(QObject):
         self.process = QProcess(self)
 
         self.process.readyReadStandardOutput.connect(self.handle_stdout)
-
         self.process.readyReadStandardError.connect(self.handle_stderr)
-
         self.process.finished.connect(self.handle_finished)
-
         self.process.errorOccurred.connect(self.handle_process_error)
 
         self.output_pdf = ""
@@ -41,7 +38,6 @@ class LatexCompiler(QObject):
         # Function that reads and sends all compilation errors to log
 
         data = self.process.readAllStandardError()
-
         text = bytes(data).decode()
 
         self.log_received.emit(text)
@@ -91,7 +87,6 @@ class LatexCompiler(QObject):
         self.compilation_started.emit()
 
         directory = tex_path.parent
-
         filename = tex_path.name
 
         self.output_pdf = str(tex_path.with_suffix(".pdf"))
