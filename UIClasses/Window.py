@@ -420,13 +420,11 @@ class MainWindow(QMainWindow):
     def pressCompile(self):
 
         self.pressFileSave()
-
         self.compiler.compile(self.__service.get_file_path())
 
     def loadPdf(self, pdf_path):
 
         file_tex_path = FileManager.get_file_path(pdf_path)
-
         pdf = str(file_tex_path.with_suffix(".pdf"))
 
         self.pdf_document.load(pdf)

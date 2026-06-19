@@ -6,8 +6,6 @@ from PySide6.QtCore import (
     QProcess
 )
 
-import os
-
 
 class LatexCompiler(QObject):
     compilation_started = Signal()
@@ -35,9 +33,6 @@ class LatexCompiler(QObject):
         # Function that reads whole process output and sends it to log
 
         data = self.process.readAllStandardOutput()
-
-        # text = bytes(data).decode()
-
         text = bytes(data).decode("utf-8", errors="ignore")
 
         self.log_received.emit(text)
