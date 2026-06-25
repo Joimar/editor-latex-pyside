@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtPdfWidgets import QPdfView
 
 
@@ -11,6 +11,14 @@ from PySide6.QtPdfWidgets import QPdfView
 class PdfView(QPdfView):
     MIN_ZOOM = 0.25
     MAX_ZOOM = 5.0
+
+    # Sinal: (page_number_1based, x_in_points, y_in_points)
+    page_clicked = Signal(int, float, float)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        # Instala filtro no viewport para capturar cliques antes do processamento interno
+        self.viewport().installEventFilter(self)
 
     def wheelEvent(self, event):
         if not (event.modifiers() & Qt.ControlModifier):

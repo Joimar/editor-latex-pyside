@@ -38,12 +38,14 @@ class SynctexService:
             return None
 
         # synctex edit -o PageNum:x:y:file.pdf
+        # Assume que o pdf tem o mesmo nome que o .synctex.gz
         pdf_path = self.synctex_file.replace(".synctex.gz", ".pdf")
 
         # O comando synctex espera coordenadas em bp (big points, 72 bp = 1 polegada)
         # Precisamos converter pixels do viewport para bp do PDF
         # Isso depende do zoom e DPI — veremos no PdfView
 
+        # Comando do syntex para saber qual linha de codigo eh equivalente aa coordenada (page, x, y) do pedf
         cmd = [
             "synctex",
             "edit",
@@ -51,6 +53,7 @@ class SynctexService:
             f"{page}:{x}:{y}:{pdf_path}"
         ]
 
+        # Executa o codigo dentro de cmd
         try:
             result = subprocess.run(
                 cmd,

@@ -390,7 +390,7 @@ class MainWindow(QMainWindow):
         return text[idx:]
 
     def eventFilter(self, obj, event):
-
+        # Funcao sobrescrita para tratar do popup
         # Verifica se o evento veio do plainTextEdit e se é um pressionamento de tecla
         if obj == self.ui.plainTextEdit and event.type() == QEvent.Type.KeyPress:
             print(f"Tecla pressionada no editor: {event.text()}")
